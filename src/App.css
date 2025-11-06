@@ -1,8 +1,47 @@
 
 .todo-container{
   padding: 20px;
+  display: flex;
+  justify-content: center;
+  text-align: center;
 }
-.takse-item{
+h1{
+  margin-bottom: 10px;
+}
+.date-time{
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+.task-list{
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.task-item{
+  display: flex;
+  justify-content: space-between;
+  gap: 5px;
+  padding: 5px;
+  border-radius: 5px;
+  background-color: rgb(75, 45, 45);
+  color: #ffffff;
+}
+.task-item .list-action-btns{
+display: flex;
+gap: 10px;
+align-items: center;
+}
+
+.task-item .list-action-btns button{
+  background-color: transparent;
+  border: 0;
+  outline: 0;
+  padding: 0;
+  color: #ffffff;
+}
+
+form{
   display: flex;
   gap: 5px;
 }

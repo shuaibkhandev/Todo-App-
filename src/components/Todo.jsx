@@ -20,12 +20,18 @@ const Todo = () => {
     setTask((prevTask)=> setTask([...prevTask, inputVal]));
    setInputVal("");
   }
+
+  const now = new Date();
+  const dateFormat = now.toLocaleDateString();
+  const timeFormat = now.toLocaleTimeString();
+
+
   return (
     <section className='todo-container'>
       {alertMsg && <p>{alertMsg}</p>}
     <header>
       <h1>Todo List</h1>
-
+       <h3 className='date-time'>{dateFormat} - {timeFormat}</h3>
       <div className="form-container">
         <form onSubmit={handleFormSubmit}>
           <div>
@@ -37,15 +43,15 @@ const Todo = () => {
         </form>
       </div>
       <div className="task-list-container">
-        <ul>
+        <ul className='task-list'>
           {
           task?.map((currentTask, index)=>{
             return (
-              <li key={index}>
+              <li key={index} className='task-item'>
                 <span>{currentTask}</span>
-                <div>
-                <span>{<FaRegCheckCircle/>}</span>
-                <span>{<MdDeleteForever/>}</span>
+                <div className='list-action-btns'>
+                <button>{<FaRegCheckCircle/>}</button>
+                <button>{<MdDeleteForever/>}</button>
                 </div>
               </li>
             )
