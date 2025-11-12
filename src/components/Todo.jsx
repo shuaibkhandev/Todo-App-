@@ -11,15 +11,17 @@ const Todo = () => {
 
   const handleInputChange = (value) => {
     setInputVal(value);
-    
   }
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
-    if(!inputVal.trim()) return;
-    if(task.includes(inputVal)) return setAlertMsg("Alread Exist") ;
-    setTask((prevTask)=> setTask([...prevTask, inputVal]));
-   setInputVal("");
+    setAlertMsg("");
+    const ValInCap = inputVal.trim().charAt(0).toUpperCase() + inputVal.slice(1);
+    if(!ValInCap) return;
+    if(task.includes(ValInCap)) return setAlertMsg("Alread Exist") ;
+    setTask((prevTask)=> setTask([...prevTask, ValInCap]));
+    setInputVal("");
+
   }
 
   
@@ -34,9 +36,16 @@ setDateTime(`${dateFormat} - ${timeFormat}`)
     return () => clearInterval(dateTimeInterval);
   },[])
 
+  const handleDelete = (deleteItem) => {
+  const updatedTask = task.filter((todo)=> todo !== deleteItem);
+  setTask(updatedTask);
+  }
+
+  const deleteAllList = () => setTask([]);
+
   return (
     <section className='todo-container'>
-      {alertMsg && <p>{alertMsg}</p>}
+      {alertMsg && <p className='alert'>{alertMsg}</p>}
     <header>
       <h1>Todo List</h1>
        <h3 className='date-time'>{dateTime}</h3>
@@ -59,13 +68,16 @@ setDateTime(`${dateFormat} - ${timeFormat}`)
                 <span>{currentTask}</span>
                 <div className='list-action-btns'>
                 <button>{<FaRegCheckCircle/>}</button>
-                <button>{<MdDeleteForever/>}</button>
+                <button onClick={()=>{handleDelete(currentTask)}}>{<MdDeleteForever/>}</button>
                 </div>
               </li>
             )
           })
           }
         </ul>
+      </div>
+      <div className="delete-list-container">
+        <button onClick={deleteAllList}>Delete All</button>
       </div>
     </header>
     </section>
