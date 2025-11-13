@@ -9,24 +9,33 @@ const Todo = () => {
   const [alertMsg, setAlertMsg] = useState("");
 
   const handleFormSubmit = ({id, value, checked}) => {
-    console.log(value);
-    
-  setAlertMsg("");
   const ValInCap = value.charAt(0).toUpperCase() + value.slice(1);
   if(!ValInCap) return;
   if(task.find((currEle)=> currEle.value === ValInCap)) return setAlertMsg("Alread Exist") ;
   setTask((prevTask)=> [...prevTask, {id, value:ValInCap, checked}]);
   }
 
-  
 
-console.log(alertMsg);
 
 
   const handleDelete = (deleteItem) => {
   const updatedTask = task.filter((todo)=> todo.value !== deleteItem);
   setTask(updatedTask);
   }
+
+  const handleCheck = (checkItem) => {
+    
+   const updatedTask =  task.map((item)=>{
+      if(item.value === checkItem){
+        return {...item, checked: !item.checked}
+      }else{
+        return item;
+      }
+    })
+    setTask(updatedTask)
+    
+  }
+  
 
   const deleteAllList = () => setTask([]);
 
@@ -43,9 +52,9 @@ console.log(alertMsg);
       <div className="task-list-container">
         <ul className='task-list'>
           {
-          task?.map((currentTask, index)=>{
+          task?.map((currentTask)=>{
             return (
-            <TodoList index={index} currentTask={currentTask} handleDelete={handleDelete} />
+            <TodoList key={currentTask.id} currentTask={currentTask} onHandleDelete={handleDelete} onHandleCheck={handleCheck}  />
             )
           })
           }

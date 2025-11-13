@@ -1,14 +1,15 @@
 
 import { FaRegCheckCircle } from 'react-icons/fa'
-import { MdDeleteForever } from 'react-icons/md'
+import { MdDeleteForever , MdOutlineRadioButtonUnchecked } from 'react-icons/md'
 
-const TodoList = ({currentTask, handleDelete}) => {
+
+const TodoList = ({currentTask, onHandleDelete, onHandleCheck}) => {
   return (
-     <li key={currentTask.id} className='task-item'>
-                   <span>{currentTask.value}</span>
+     <li className='task-item'>
+                   <span className={`${currentTask.checked ? "checked" : ""}`}>{currentTask.value}</span>
                    <div className='list-action-btns'>
-                   <button>{<FaRegCheckCircle/>}</button>
-                   <button onClick={()=>{handleDelete(currentTask.value)}}>{<MdDeleteForever/>}</button>
+                   <button onClick={()=>{onHandleCheck(currentTask.value)}}>{ currentTask.checked?    <FaRegCheckCircle/> : <MdOutlineRadioButtonUnchecked/>}</button>
+                   <button onClick={()=>{onHandleDelete(currentTask.value)}}>{<MdDeleteForever/>}</button>
                    </div>
                  </li>
   )

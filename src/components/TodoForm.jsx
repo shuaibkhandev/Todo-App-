@@ -6,7 +6,6 @@ const TodoForm = ({handleFormSubmitProp}) => {
     const handleFormSubmit = (event) => {
         event.preventDefault();
         handleFormSubmitProp(inputVal);
-           setInputVal({});
     }
 
       const handleInputChange = (value) => {
