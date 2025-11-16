@@ -5,14 +5,20 @@ import TodoDate from './TodoDate';
 
 
 const Todo = () => {
-  const [task, setTask] = useState([]);
+  const [task, setTask] = useState(()=>{
+    const savedTasks = localStorage.getItem("tasks");
+    return savedTasks ? JSON.parse(savedTasks) : [];
+  });
   const [alertMsg, setAlertMsg] = useState("");
+
+
 
   const handleFormSubmit = ({id, value, checked}) => {
   const ValInCap = value.charAt(0).toUpperCase() + value.slice(1);
   if(!ValInCap) return;
   if(task.find((currEle)=> currEle.value === ValInCap)) return setAlertMsg("Alread Exist") ;
-  setTask((prevTask)=> [...prevTask, {id, value:ValInCap, checked}]);
+  setTask((prevTask)=> [{id, value:ValInCap, checked}, ...prevTask]);
+  localStorage.setItem("task", task)
   }
 
 
@@ -39,6 +45,10 @@ const Todo = () => {
 
   const deleteAllList = () => setTask([]);
 
+    useEffect(() => {
+  localStorage.setItem("tasks", JSON.stringify(task));
+}, [task]);
+
   return (
     <section className='todo-container'>
       {alertMsg && <p className='alert'>{alertMsg}</p>}
@@ -52,9 +62,9 @@ const Todo = () => {
       <div className="task-list-container">
         <ul className='task-list'>
           {
-          task?.map((currentTask)=>{
+          task?.map((currentTask, index)=>{
             return (
-            <TodoList key={currentTask.id} currentTask={currentTask} onHandleDelete={handleDelete} onHandleCheck={handleCheck}  />
+            <TodoList key={index} currentTask={currentTask} onHandleDelete={handleDelete} onHandleCheck={handleCheck}  />
             )
           })
           }
